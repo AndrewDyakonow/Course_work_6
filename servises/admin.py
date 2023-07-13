@@ -7,4 +7,4 @@ from servises.models import Client
 
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'comment')
+    list_display = ('name', 'email', 'comment', 'is_active')

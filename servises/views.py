@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
 
+from servises.forms import ClientCreateForm
 from servises.models import Client
 
 
@@ -25,16 +27,30 @@ class ClientsListView(ListView):
 
 
 class ClientsDetailView(DetailView):
-    pass
+    model = Client
+    template_name = 'servises/clients/client_detail.html'
 
 
 class ClientsCreateView(CreateView):
-    pass
+    model = Client
+    template_name = 'servises/clients/client_create.html'
+    form_class = ClientCreateForm
+    success_url = reverse_lazy('servises:clients')
 
 
 class ClientsUpdateView(UpdateView):
-    pass
+    model = Client
+    template_name = 'servises/clients/client_create.html'
+    form_class = ClientCreateForm
+    success_url = reverse_lazy('servises:clients')
 
 
 class ClientsDeleteView(DeleteView):
-    pass
+    model = Client
+    template_name = 'servises/clients/client_delete.html'
+    success_url = reverse_lazy('servises:clients')
+
+
+
+
+
