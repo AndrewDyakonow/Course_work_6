@@ -67,6 +67,14 @@
                     </div>
                 </li>
 
+                <li class="nav-item dropdown">
+                    <a class="nav-link active" href="#" data-bs-toggle="dropdown">Настройки</a>
+                    <div class="dropdown-content">
+                        <a href="{% url 'servises:setting_list' %}">Настройки</a>
+                        <a href="{% url 'servises:setting_list' %}">Добавить</a>
+                    </div>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'admin:index' %}">Админка</a>
                 </li>

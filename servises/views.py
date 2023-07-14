@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
 
-from servises.forms import ClientCreateForm
-from servises.models import Client
+from servises.forms import ClientCreateForm, SettingCreateForm
+from servises.models import Client, Settings
 
 
 def start_page(request):
@@ -51,6 +51,48 @@ class ClientsDeleteView(DeleteView):
     success_url = reverse_lazy('servises:clients')
 
 
+class SettingsListView(ListView):
+    model = Settings
+    template_name = 'servises/settings/settings_list.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['data'] = {
+            'status': 'Статус',
+        }
+        return context
 
 
+class SettingsDetailView(DetailView):
+    model = Settings
+    template_name = 'servises/settings/settings_detail.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['names'] = {
+            'status': 'Статус',
+            'start': 'Дата начала рассылки',
+            'end': 'Дата окончания рассылки',
+            'periodicity': 'Периодичность',
+        }
+        return context
+
+
+class SettingsCreateView(CreateView):
+    model = Settings
+    template_name = 'servises/settings/settings_create.html'
+    form_class = SettingCreateForm
+    success_url = reverse_lazy('servises:setting_list')
+
+
+class SettingsUpdateView(UpdateView):
+    model = Settings
+    template_name = 'servises/settings/settings_create.html'
+    form_class = SettingCreateForm
+    success_url = reverse_lazy('servises:setting_list')
+
+
+class SettingsDeleteView(DeleteView):
+    model = Settings
+    template_name = 'servises/settings/settings_delete.html'
+    success_url = reverse_lazy('servises:setting_list')
