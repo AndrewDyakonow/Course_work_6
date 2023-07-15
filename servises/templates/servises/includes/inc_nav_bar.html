@@ -71,7 +71,15 @@
                     <a class="nav-link active" href="#" data-bs-toggle="dropdown">Настройки</a>
                     <div class="dropdown-content">
                         <a href="{% url 'servises:setting_list' %}">Настройки</a>
-                        <a href="{% url 'servises:setting_list' %}">Добавить</a>
+                        <a href="{% url 'servises:setting_create' %}">Добавить</a>
+                    </div>
+                </li>
+
+                 <li class="nav-item dropdown">
+                    <a class="nav-link active" href="#" data-bs-toggle="dropdown">Сообщения</a>
+                    <div class="dropdown-content">
+                        <a href="{% url 'servises:message_list' %}">Сообщения</a>
+                        <a href="{% url 'servises:message_list' %}">Добавить</a>
                     </div>
                 </li>
 

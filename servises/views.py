@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
 
-from servises.forms import ClientCreateForm, SettingCreateForm
-from servises.models import Client, Settings
+from servises.forms import ClientCreateForm, SettingCreateForm, MessagesCreateForm
+from servises.models import Client, Settings, Messages
 
 
 def start_page(request):
@@ -96,3 +96,33 @@ class SettingsDeleteView(DeleteView):
     model = Settings
     template_name = 'servises/settings/settings_delete.html'
     success_url = reverse_lazy('servises:setting_list')
+
+
+class MessageListView(ListView):
+    model = Messages
+    template_name = 'servises/messages/message_list.html'
+
+
+class MessageDetailView(DetailView):
+    model = Messages
+    template_name = 'servises/messages/message_detail.html'
+
+
+class MessageCreateView(CreateView):
+    model = Messages
+    template_name = 'servises/messages/message_create.html'
+    success_url = reverse_lazy('servises:message_list')
+    form_class = MessagesCreateForm
+
+
+class MessageUpdateView(UpdateView):
+    model = Messages
+    template_name = 'servises/messages/message_create.html'
+    success_url = reverse_lazy('servises:message_list')
+    form_class = MessagesCreateForm
+
+
+class MessageDeleteView(DeleteView):
+    model = Messages
+    template_name = 'servises/messages/message_delete.html'
+    success_url = reverse_lazy('servises:message_list')

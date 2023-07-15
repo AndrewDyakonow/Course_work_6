@@ -1,6 +1,6 @@
 from django import forms
 
-from servises.models import Client, Settings
+from servises.models import Client, Settings, Messages
 
 
 class ClientCreateForm(forms.ModelForm):
@@ -24,4 +24,11 @@ class SettingCreateForm(forms.ModelForm):
 
     class Meta:
         model = Settings
+        fields = '__all__'
+
+
+class MessagesCreateForm(forms.ModelForm):
+
+    class Meta:
+        model = Messages
         fields = '__all__'

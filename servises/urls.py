@@ -2,7 +2,7 @@ from django.urls import path
 
 from servises.views import start_page, test_view, main_page, ClientsListView, ClientsDetailView, ClientsCreateView, \
     ClientsUpdateView, ClientsDeleteView, SettingsListView, SettingsCreateView, SettingsDetailView, SettingsUpdateView, \
-    SettingsDeleteView
+    SettingsDeleteView, MessageListView, MessageCreateView, MessageDetailView, MessageUpdateView, MessageDeleteView
 
 app_name = 'servises'
 
@@ -21,4 +21,10 @@ urlpatterns = [
     path('settings/<int:pk>/', SettingsDetailView.as_view(), name='setting_detail'),
     path('settings/update/<int:pk>/', SettingsUpdateView.as_view(), name='setting_update'),
     path('settings/delete/<int:pk>/', SettingsDeleteView.as_view(), name='setting_delete'),
+
+    path('message/', MessageListView.as_view(), name='message_list'),
+    path('message/new/', MessageCreateView.as_view(), name='message_create'),
+    path('message/<int:pk>/', MessageDetailView.as_view(), name='message_detail'),
+    path('message/update/<int:pk>/', MessageUpdateView.as_view(), name='message_update'),
+    path('message/delete/<int:pk>/', MessageDeleteView.as_view(), name='message_delete'),
 ]

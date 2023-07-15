@@ -2,6 +2,11 @@ from django.db import models
 from django.urls import reverse
 from django.utils.timezone import now
 
+NULLABLE = {
+    'blank': True,
+    'null': True,
+}
+
 
 class Client(models.Model):
     name = models.CharField(max_length=100, verbose_name='ФИО')
@@ -39,6 +44,7 @@ class Settings(models.Model):
         ENDING = 'Завершена', 'Завершена'
 
     mailing_name = models.CharField(max_length=127, verbose_name='Название')
+    message = models.ForeignKey('Messages', on_delete=models.CASCADE, verbose_name='Письмо для рассылки', **NULLABLE)
     client_name = models.ManyToManyField(Client, verbose_name='Имя клиентов')
     date_mailing = models.DateTimeField(default=now, verbose_name='Дата начала рассылки')
     date_end_mailing = models.DateTimeField(default=now, verbose_name='Дата окончания рассылки')
@@ -70,3 +76,35 @@ class Settings(models.Model):
     def __str__(self):
         return f'{self.mailing_name}, {self.client_name}, {self.date_mailing}, ' \
                f'{self.date_end_mailing}, {self.periodicity}, {self.status}'
+
+
+class Messages(models.Model):
+    theme = models.CharField(max_length=63, verbose_name='Тема письма')
+    body = models.TextField(max_length=511, verbose_name='Содержимое письма')
+    is_active = models.BooleanField(default=True, verbose_name='Активность')
+
+    def delete(self, **kwargs):
+        self.is_active = False
+        self.save()
+
+    def __str__(self):
+        return f'{self.theme}, {self.body}'
+
+    class Meta:
+        verbose_name = 'Письмо'
+        verbose_name_plural = 'Письма'
+        ordering = ['theme']
+
+
+class Logs(models.Model):
+    title = models.CharField(max_length=63, default=str(now), verbose_name='Название')
+    date_last = models.DateTimeField(**NULLABLE, verbose_name='Дата последней попытки')
+    status = models.CharField(max_length=25, verbose_name='Статус попытки')
+    answer = models.TextField(max_length=511, default=None, verbose_name='Ответ сервера')
+
+    def __str__(self):
+        return f'{self.date_last}, {self.status}, {self.answer}'
+
+    class Meta:
+        verbose_name = 'Лог'
+        verbose_name_plural = 'Логи'
