@@ -15,12 +15,10 @@ class ClientCreateForm(forms.ModelForm):
 
 
 class SettingCreateForm(forms.ModelForm):
-    # mailing_name = forms.CharField(label='Название')
-    # client_name = forms.CharField(label='Имя клиентов')
-    # date_mailing = forms.DateTimeField(label='Дата начала рассылки')
-    # date_end_mailing = forms.DateTimeField(label='Дата окончания рассылки')
-    # periodicity = forms.CharField(label='Периодичность')
-    # status = forms.CharField(label='Статус')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['status'].widget = forms.HiddenInput()
 
     class Meta:
         model = Settings

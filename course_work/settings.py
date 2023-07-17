@@ -80,8 +80,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'course_work_6',
-        'USER': os.getenv('DB_PASSWORD'),
-        'PASSWORD': os.getenv('DB_USERNAME'),
+        'USER': os.getenv('DB_USERNAME'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
     }
 }
 
@@ -131,3 +131,13 @@ MEDIA_ROOT = [os.path.join(BASE_DIR, 'media')]
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+load_dotenv()
+
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_HOST_USER = os.getenv('MY_EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv("MY_EMAIL_HOST_PASSWORD")
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+

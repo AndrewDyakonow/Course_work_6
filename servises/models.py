@@ -34,6 +34,7 @@ class Client(models.Model):
 class Settings(models.Model):
 
     class Periodicity(models.TextChoices):
+        EVERY_MINUTES = 'Раз в минуту', 'Раз в минуту'
         EVERY_DAY = 'Раз в день', 'Раз в день'
         EVERY_WEEK = 'Раз в неделю', 'Раз в неделю'
         EVERY_MONTH = 'Раз в месяц', 'Раз в месяц'
@@ -58,7 +59,7 @@ class Settings(models.Model):
     status = models.CharField(
         max_length=63,
         choices=Status.choices,
-        default=Status.ENDING,
+        default=Status.CREATED,
         verbose_name='Статус рассылки'
     )
 
@@ -74,8 +75,8 @@ class Settings(models.Model):
         return reverse('servises:setting_detail', args=[self.pk])
 
     def __str__(self):
-        return f'{self.mailing_name}, {self.client_name}, {self.date_mailing}, ' \
-               f'{self.date_end_mailing}, {self.periodicity}, {self.status}'
+        return f'{self.mailing_name}, {self.message}, {self.client_name}, {self.date_mailing}, ' \
+               f'{self.date_end_mailing}, {self.is_active}, {self.periodicity}, {self.status}'
 
 
 class Messages(models.Model):

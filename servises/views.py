@@ -4,6 +4,8 @@ from django.views.generic import ListView, DetailView, UpdateView, DeleteView, C
 
 from servises.forms import ClientCreateForm, SettingCreateForm, MessagesCreateForm
 from servises.models import Client, Settings, Messages
+from servises.utils.utils import AutoMail
+from django.utils.timezone import now
 
 
 def start_page(request):
@@ -126,3 +128,12 @@ class MessageDeleteView(DeleteView):
     model = Messages
     template_name = 'servises/messages/message_delete.html'
     success_url = reverse_lazy('servises:message_list')
+
+
+def start_mailing(request, pk):
+    context = {'result': 'Рассылка запущена'}
+    data = Settings.objects.get(id=pk)
+
+    a = AutoMail(data)
+
+    return render(request, 'servises/start_mailing.html', context=context)
