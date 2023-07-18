@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import permission_required, login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
@@ -15,45 +17,42 @@ def start_page(request):
     return render(request, 'servises/index.html', context=context)
 
 
-def test_view(requests):
-    return render(requests, 'servises/test.html')
-
-
+@login_required
 def main_page(requests):
     return render(requests, 'servises/main_page.html')
 
 
-class ClientsListView(ListView):
+class ClientsListView(LoginRequiredMixin, ListView):
     model = Client
     template_name = 'servises/clients/client_list.html'
 
 
-class ClientsDetailView(DetailView):
+class ClientsDetailView(LoginRequiredMixin, DetailView):
     model = Client
     template_name = 'servises/clients/client_detail.html'
 
 
-class ClientsCreateView(CreateView):
+class ClientsCreateView(LoginRequiredMixin, CreateView):
     model = Client
     template_name = 'servises/clients/client_create.html'
     form_class = ClientCreateForm
     success_url = reverse_lazy('servises:clients')
 
 
-class ClientsUpdateView(UpdateView):
+class ClientsUpdateView(LoginRequiredMixin, UpdateView):
     model = Client
     template_name = 'servises/clients/client_create.html'
     form_class = ClientCreateForm
     success_url = reverse_lazy('servises:clients')
 
 
-class ClientsDeleteView(DeleteView):
+class ClientsDeleteView(LoginRequiredMixin, DeleteView):
     model = Client
     template_name = 'servises/clients/client_delete.html'
     success_url = reverse_lazy('servises:clients')
 
 
-class SettingsListView(ListView):
+class SettingsListView(LoginRequiredMixin, ListView):
     model = Settings
     template_name = 'servises/settings/settings_list.html'
 
@@ -65,7 +64,7 @@ class SettingsListView(ListView):
         return context
 
 
-class SettingsDetailView(DetailView):
+class SettingsDetailView(LoginRequiredMixin, DetailView):
     model = Settings
     template_name = 'servises/settings/settings_detail.html'
 
@@ -80,51 +79,51 @@ class SettingsDetailView(DetailView):
         return context
 
 
-class SettingsCreateView(CreateView):
+class SettingsCreateView(LoginRequiredMixin, CreateView):
     model = Settings
     template_name = 'servises/settings/settings_create.html'
     form_class = SettingCreateForm
     success_url = reverse_lazy('servises:setting_list')
 
 
-class SettingsUpdateView(UpdateView):
+class SettingsUpdateView(LoginRequiredMixin, UpdateView):
     model = Settings
     template_name = 'servises/settings/settings_create.html'
     form_class = SettingCreateForm
     success_url = reverse_lazy('servises:setting_list')
 
 
-class SettingsDeleteView(DeleteView):
+class SettingsDeleteView(LoginRequiredMixin, DeleteView):
     model = Settings
     template_name = 'servises/settings/settings_delete.html'
     success_url = reverse_lazy('servises:setting_list')
 
 
-class MessageListView(ListView):
+class MessageListView(LoginRequiredMixin, ListView):
     model = Messages
     template_name = 'servises/messages/message_list.html'
 
 
-class MessageDetailView(DetailView):
+class MessageDetailView(LoginRequiredMixin, DetailView):
     model = Messages
     template_name = 'servises/messages/message_detail.html'
 
 
-class MessageCreateView(CreateView):
+class MessageCreateView(LoginRequiredMixin, CreateView):
     model = Messages
     template_name = 'servises/messages/message_create.html'
     success_url = reverse_lazy('servises:message_list')
     form_class = MessagesCreateForm
 
 
-class MessageUpdateView(UpdateView):
+class MessageUpdateView(LoginRequiredMixin, UpdateView):
     model = Messages
     template_name = 'servises/messages/message_create.html'
     success_url = reverse_lazy('servises:message_list')
     form_class = MessagesCreateForm
 
 
-class MessageDeleteView(DeleteView):
+class MessageDeleteView(LoginRequiredMixin, DeleteView):
     model = Messages
     template_name = 'servises/messages/message_delete.html'
     success_url = reverse_lazy('servises:message_list')
@@ -146,6 +145,6 @@ def start_mailing(request, pk):
     return render(request, 'servises/start_mailing.html', context=context)
 
 
-class LogListView(ListView):
+class LogListView(LoginRequiredMixin, ListView):
     model = Logs
     template_name = 'servises/logs/logs.html'
