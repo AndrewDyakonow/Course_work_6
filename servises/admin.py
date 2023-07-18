@@ -14,7 +14,6 @@ class ClientAdmin(admin.ModelAdmin):
 class SettingsAdmin(admin.ModelAdmin):
     list_display = (
         'mailing_name',
-
         'date_mailing',
         'date_end_mailing',
         'periodicity',
@@ -32,3 +31,6 @@ class MessagesAdmin(admin.ModelAdmin):
 @admin.register(Logs)
 class LogsAdmin(admin.ModelAdmin):
     list_display = ('title', 'date_last', 'status', 'answer')
+    list_filter = ('settings__mailing_name',)
+
+

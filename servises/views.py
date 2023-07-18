@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
 
 from servises.forms import ClientCreateForm, SettingCreateForm, MessagesCreateForm
-from servises.models import Client, Settings, Messages
+from servises.models import Client, Settings, Messages, Logs
 from servises.utils.utils import AutoMail
 from django.utils.timezone import now
 
@@ -132,8 +132,20 @@ class MessageDeleteView(DeleteView):
 
 def start_mailing(request, pk):
     context = {'result': 'Рассылка запущена'}
+
     data = Settings.objects.get(id=pk)
+    Logs.objects.create(
+        title=f'Запуск: {data.mailing_name}',
+        date_last=now(),
+        status='Рассылка включена',
+        answer='Без ответа',
+        settings=data,
+    )
 
     a = AutoMail(data)
-
     return render(request, 'servises/start_mailing.html', context=context)
+
+
+class LogListView(ListView):
+    model = Logs
+    template_name = 'servises/logs/logs.html'

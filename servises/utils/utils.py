@@ -4,8 +4,7 @@ from django.utils.timezone import now
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
-from servises.models import Settings
-
+from servises.models import Settings, Logs
 
 CHOICES = {
     'Раз в минуту': {'minute': "*/1"},
@@ -13,6 +12,16 @@ CHOICES = {
     'Раз в неделю': {'week': '*/1'},
     'Раз в месяц':  {'month': '*/1'},
 }
+
+
+def help_mixin(data: Settings, command, status) -> None:
+    Logs.objects.create(
+        title=f'{command}: {data.mailing_name}',
+        date_last=now(),
+        status=f'{status}',
+        answer='good',
+        settings=data,
+    )
 
 
 class AutoMail:
@@ -32,6 +41,8 @@ class AutoMail:
             start_date=self.data.date_mailing,
         )
 
+        help_mixin(self.data, 'Создана задача', 'Рассылка активирована')
+
     def __preparation_sending(self):
         """"""
         setting = Settings.objects.get(mailing_name=self.data.mailing_name)
@@ -45,8 +56,11 @@ class AutoMail:
             setting.save()
             self.assd.remove()
 
+            help_mixin(self.data, 'Рассылка завершена', 'Good')
+
     def mail_to(self):
         """Отправка сообщений по адресам"""
+
         for client in self.data.client_name.all():
             send_mail(
                 self.data.message.theme,
@@ -54,3 +68,5 @@ class AutoMail:
                 settings.EMAIL_HOST_USER,
                 recipient_list=[client.email],
             )
+
+            help_mixin(self.data,  f'Письмо отправлено {client.email}', 'Отправлено')

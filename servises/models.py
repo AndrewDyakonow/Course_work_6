@@ -102,6 +102,7 @@ class Logs(models.Model):
     date_last = models.DateTimeField(**NULLABLE, verbose_name='Дата последней попытки')
     status = models.CharField(max_length=25, verbose_name='Статус попытки')
     answer = models.TextField(max_length=511, default=None, verbose_name='Ответ сервера')
+    settings = models.ForeignKey(Settings, on_delete=models.DO_NOTHING, verbose_name='Настройка')
 
     def __str__(self):
         return f'{self.date_last}, {self.status}, {self.answer}'
@@ -109,3 +110,4 @@ class Logs(models.Model):
     class Meta:
         verbose_name = 'Лог'
         verbose_name_plural = 'Логи'
+        ordering = ['-date_last']
