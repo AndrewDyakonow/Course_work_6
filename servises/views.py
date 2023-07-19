@@ -38,6 +38,12 @@ class ClientsCreateView(LoginRequiredMixin, CreateView):
     form_class = ClientCreateForm
     success_url = reverse_lazy('servises:clients')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        self.object.creator = self.request.user
+        self.object.save()
+        return super().form_valid(form)
+
 
 class ClientsUpdateView(LoginRequiredMixin, UpdateView):
     model = Client
@@ -55,6 +61,11 @@ class ClientsDeleteView(LoginRequiredMixin, DeleteView):
 class SettingsListView(LoginRequiredMixin, ListView):
     model = Settings
     template_name = 'servises/settings/settings_list.html'
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return super().get_queryset()
+        return super().get_queryset().filter(creator=self.request.user)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -85,6 +96,12 @@ class SettingsCreateView(LoginRequiredMixin, CreateView):
     form_class = SettingCreateForm
     success_url = reverse_lazy('servises:setting_list')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        self.object.creator = self.request.user
+        self.object.save()
+        return super().form_valid(form)
+
 
 class SettingsUpdateView(LoginRequiredMixin, UpdateView):
     model = Settings
@@ -114,6 +131,12 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
     template_name = 'servises/messages/message_create.html'
     success_url = reverse_lazy('servises:message_list')
     form_class = MessagesCreateForm
+
+    def form_valid(self, form):
+        self.object = form.save()
+        self.object.creator = self.request.user
+        self.object.save()
+        return super().form_valid(form)
 
 
 class MessageUpdateView(LoginRequiredMixin, UpdateView):

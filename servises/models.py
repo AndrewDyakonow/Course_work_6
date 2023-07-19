@@ -1,6 +1,9 @@
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from django.utils.timezone import now
+
+from users.models import Users
 
 NULLABLE = {
     'blank': True,
@@ -12,6 +15,12 @@ class Client(models.Model):
     name = models.CharField(max_length=100, verbose_name='ФИО')
     email = models.EmailField(verbose_name='Электронная почта')
     comment = models.CharField(max_length=255, verbose_name='Комментарий')
+    creator = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        **NULLABLE,
+        verbose_name='создатель'
+    )
 
     is_active = models.BooleanField(default=True, verbose_name='Активность')
 
@@ -62,6 +71,12 @@ class Settings(models.Model):
         default=Status.CREATED,
         verbose_name='Статус рассылки'
     )
+    creator = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        **NULLABLE,
+        verbose_name='создатель'
+    )
 
     class Meta:
         verbose_name = 'Настройка'
@@ -83,6 +98,12 @@ class Messages(models.Model):
     theme = models.CharField(max_length=63, verbose_name='Тема письма')
     body = models.TextField(max_length=511, verbose_name='Содержимое письма')
     is_active = models.BooleanField(default=True, verbose_name='Активность')
+    creator = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        **NULLABLE,
+        verbose_name='создатель'
+    )
 
     def delete(self, **kwargs):
         self.is_active = False
