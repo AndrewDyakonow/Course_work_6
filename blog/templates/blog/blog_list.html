@@ -1,0 +1,43 @@
+{% extends 'servises/base.html' %}
+
+{% block content %}
+
+    {% include 'servises/includes/inc_nav_bar.html' %}
+
+    <br>
+
+    <main class="container">
+        <div class="p-4 p-md-5 mb-4 rounded text-bg-dark">
+            <div class="col-md-6 px-0">
+                <h1 class="display-4 fst-italic">Блог для курсовика</h1>
+                <p class="lead my-3">Здесь можно написать что-нибудь. Всёравно никто не увидит</p>
+                <p class="lead mb-0"><a href="{% url 'blog:create' %}" style="color:#00FF00" class="fw-bold">Написать пост</a></p>
+            </div>
+        </div>
+
+        {% for object in object_list %}
+        <div class="row mb-2">
+            <div class="col-md-6">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <strong class="d-inline-block mb-2 text-primary">{{ object.author }}</strong>
+                        <h3 class="mb-0">{{ object.title }}</h3>
+                        <div class="mb-1 text-muted">{{ object.date }}</div>
+                        <p class="card-text mb-auto">{{ object.body }}</p>
+                        <a href="{% url 'blog:detail' object.pk %}" style="color:blue">смотреть дальше...</a>
+                        <div class="mb-1 text-muted">просмотры: {{ object.view }}</div>
+                    </div>
+                    <div class="col-auto d-none d-lg-block">
+                        <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg"
+                             role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
+                             focusable="false"><title>Placeholder</title>
+                            <img src="{{ object.image.url }}">
+                        </svg>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </main>
+{% endblock %}
