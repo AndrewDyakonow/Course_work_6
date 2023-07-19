@@ -3,7 +3,7 @@ from django.urls import path
 from servises.views import start_page, main_page, ClientsListView, ClientsDetailView, ClientsCreateView, \
     ClientsUpdateView, ClientsDeleteView, SettingsListView, SettingsCreateView, SettingsDetailView, SettingsUpdateView, \
     SettingsDeleteView, MessageListView, MessageCreateView, MessageDetailView, MessageUpdateView, MessageDeleteView, \
-    start_mailing, LogListView
+    start_mailing, LogListView, end_mailing
 
 app_name = 'servises'
 
@@ -29,5 +29,6 @@ urlpatterns = [
     path('message/delete/<int:pk>/', MessageDeleteView.as_view(), name='message_delete'),
 
     path('settings/startmailing/<int:pk>/', start_mailing, name='start_mailing'),
+    path('settings/endmailing/<int:pk>/', end_mailing, name='end_mailing'),
     path('settings/logs/', LogListView.as_view(), name='log'),
 ]

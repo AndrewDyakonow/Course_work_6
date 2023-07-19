@@ -50,6 +50,7 @@ class Settings(models.Model):
 
     class Status(models.TextChoices):
         CREATED = 'Создана', 'Создана'
+        ACTIVATE = 'Активирована', 'Активирована'
         ACTIVE = 'Активна', 'Активна'
         ENDING = 'Завершена', 'Завершена'
 

@@ -27,7 +27,7 @@
                         <div class="row mb-6">
                             <div class="col-12">
                                 <a class="btn btn-blue" href="{% url 'servises:client' object.pk %}">Подробно</a>
-                                {% if object.creator == user %}
+                                {% if object.creator == user or user.is_superuser or user.is_staff%}
                                     <a class="btn btn-danger" href="{% url 'servises:client_delete' object.pk %}">Удалить</a>
                                 {% endif %}
                             </div>

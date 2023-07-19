@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import permission_required, login_required
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -63,7 +63,7 @@ class SettingsListView(LoginRequiredMixin, ListView):
     template_name = 'servises/settings/settings_list.html'
 
     def get_queryset(self):
-        if self.request.user.is_superuser:
+        if self.request.user.is_superuser or self.request.user.is_staff:
             return super().get_queryset()
         return super().get_queryset().filter(creator=self.request.user)
 
@@ -154,7 +154,6 @@ class MessageDeleteView(LoginRequiredMixin, DeleteView):
 
 def start_mailing(request, pk):
     context = {'result': 'Рассылка запущена'}
-
     data = Settings.objects.get(id=pk)
     Logs.objects.create(
         title=f'Запуск: {data.mailing_name}',
@@ -165,6 +164,17 @@ def start_mailing(request, pk):
     )
 
     a = AutoMail(data)
+    a.create_automail()
+
+    return render(request, 'servises/start_mailing.html', context=context)
+
+
+def end_mailing(request, pk):
+    context = {'result': 'Рассылка остановлена'}
+    data = Settings.objects.get(id=pk)
+    a = AutoMail(data)
+    a.break_mailing(data.mailing_name)
+
     return render(request, 'servises/start_mailing.html', context=context)
 
 

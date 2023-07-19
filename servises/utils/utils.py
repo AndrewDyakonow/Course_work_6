@@ -26,37 +26,41 @@ def help_mixin(data: Settings, command, status) -> None:
 
 class AutoMail:
 
-    def __init__(self, data):
-        self.scheduler = BackgroundScheduler()
-        self.data: Settings = data
-        self.__create_automail()
-        self.scheduler.start()
+    __object = None
+    scheduler = BackgroundScheduler()
 
-    def __create_automail(self):
+    def __new__(cls, *args, **kwargs):
+        if cls.__object is None:
+            cls.__object = super().__new__(cls)
+        return cls.__object
+
+    def __init__(self, data):
+        self.data: Settings = data
+        self.setting = Settings.objects.get(mailing_name=self.data.mailing_name)
+
+    def create_automail(self):
         """Создание задания"""
-        self.assd = self.scheduler.add_job(
+        AutoMail.scheduler.add_job(
             self.__preparation_sending,
             trigger='cron',
             **(CHOICES.get(self.data.periodicity)),
             start_date=self.data.date_mailing,
+            id=self.data.mailing_name,
         )
-
+        AutoMail.scheduler.start()
+        self.setting.status = 'Активирована'
+        self.setting.save()
         help_mixin(self.data, 'Создана задача', 'Рассылка активирована')
 
     def __preparation_sending(self):
         """"""
-        setting = Settings.objects.get(mailing_name=self.data.mailing_name)
-        setting.status = 'Активна'
-        setting.save()
+        self.setting.status = 'Активна'
+        self.setting.save()
 
         if now() < self.data.date_end_mailing:
             self.mail_to()
         else:
-            setting.status = 'Завершена'
-            setting.save()
-            self.assd.remove()
-
-            help_mixin(self.data, 'Рассылка завершена', 'Good')
+            self.break_mailing(self.data.mailing_name)
 
     def mail_to(self):
         """Отправка сообщений по адресам"""
@@ -70,3 +74,10 @@ class AutoMail:
             )
 
             help_mixin(self.data,  f'Письмо отправлено {client.email}', 'Отправлено')
+
+    def break_mailing(self, id_job):
+        self.setting.status = 'Завершена'
+        self.setting.save()
+
+        AutoMail.scheduler.remove_job(job_id=id_job)
+        help_mixin(self.data, 'Рассылка завершена', 'Good')
