@@ -3,67 +3,120 @@
 {% block content %}
 
     <div id="preloader">
-    <div id="status">&nbsp;</div>
-</div>
+        <div id="status">&nbsp;</div>
+    </div>
 
-<style>
-body {
-	margin: 0;
-	font-family: Roboto, -apple-system, 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
-	background: #ffffff;
-}
-</style>
+    <style>
+        body {
+            margin: 0;
+            font-family: Roboto, -apple-system, 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
+            background: #ffffff;
+        }
+    </style>
 
-{% include 'servises/includes/inc_nav_bar.html' %}
+    {% include 'servises/includes/inc_nav_bar.html' %}
 
-<section class="section-wrap services">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-3">
-                <div class="service-item icon-effect-1 icon-blue icon-effect-1a">
-                    <a href="{% url 'servises:clients' %}">
-                        <i class="hi-icon icon icon-Click"></i>
-                    </a>
-                    <h5 class="text-center">Клиенты</h5>
-                    <div class="main-border blue"></div>
-                    <p class="text-center">Список клиентов для рассылки</p>
+
+    <section class="results">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4 text-center">
+						<div class="statistic">
+							<span class="timer" data-from="0" data-to="{{ settings }}"></span>
+							<h5 class="counter-text">Рассылок</h5>
+						</div>
+					</div> <!-- end col -->
+                    <div class="col-sm-4 text-center">
+						<div class="statistic">
+							<span class="timer" data-from="0" data-to="{{ active_settings }}"></span>
+							<h5 class="counter-text">Активных рассылок</h5>
+						</div>
+					</div> <!-- end col -->
+                    <div class="col-sm-4 text-center">
+						<div class="statistic">
+							<span class="timer" data-from="0" data-to="{{ clients }}"></span>
+							<h5 class="counter-text">Уникальных клиентов</h5>
+						</div>
+					</div> <!-- end col -->
+				</div> <!-- end row -->
+			</div> <!-- end container -->
+		</section> <!-- end results -->
+
+
+    <section class="section-wrap services">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="service-item icon-effect-1 icon-blue icon-effect-1a">
+                        <a href="{% url 'servises:clients' %}">
+                            <i class="hi-icon icon icon-Click"></i>
+                        </a>
+                        <h5 class="text-center">Клиенты</h5>
+                        <div class="main-border blue"></div>
+                        <p class="text-center">Список клиентов для рассылки</p>
+                    </div>
+                </div> <!-- end service item -->
+
+                <div class="col-sm-3">
+                    <div class="service-item icon-effect-1 icon-orange icon-effect-1a last">
+                        <a href="{% url 'servises:setting_list' %}">
+                            <i class="hi-icon icon icon-Dollars"></i>
+                        </a>
+                        <h5 class="text-center">Настройки</h5>
+                        <div class="main-border orange"></div>
+                        <p class="text-center">Настройки рассылок</p>
+                    </div>
                 </div>
-            </div> <!-- end service item -->
 
-            <div class="col-sm-3">
-                <div class="service-item icon-effect-1 icon-orange icon-effect-1a last">
-                    <a href="{% url 'servises:setting_list' %}">
-                        <i class="hi-icon icon icon-Dollars"></i>
-                    </a>
-                    <h5 class="text-center">Настройки</h5>
-                    <div class="main-border orange"></div>
-                    <p class="text-center">Настройки рассылок</p>
+                <div class="col-sm-3">
+                    <div class="service-item icon-effect-1 icon-violet icon-effect-1a">
+                        <a href="{% url 'servises:message_list' %}">
+                            <i class="hi-icon icon icon-Umbrella"></i>
+                        </a>
+                        <h5 class="text-center">Рассылка</h5>
+                        <div class="main-border violet"></div>
+                        <p class="text-center">Сообщения для рассылок</p>
+                    </div>
+                </div> <!-- end service item -->
+
+                <div class="col-sm-3">
+                    <div class="service-item icon-effect-1 icon-orange icon-effect-1a last">
+                        <a href="{% url 'servises:log' %}">
+                            <i class="hi-icon icon icon-DesktopMonitor"></i>
+                        </a>
+                        <h5 class="text-center">Логи</h5>
+                        <div class="main-border orange"></div>
+                        <p class="text-center">Статистика по рассылкам</p>
+                    </div>
+                </div>
+            </div> <!-- end row -->
+        </div> <!-- end container -->
+    </section>
+
+
+    {% for object in queryset %}
+        <div class="row mb-2">
+            <div class="col-md-6">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <strong class="d-inline-block mb-2 text-primary">{{ object.author }}</strong>
+                        <h3 class="mb-0">{{ object.title }}</h3>
+                        <div class="mb-1 text-muted">{{ object.date }}</div>
+                        <p class="card-text mb-auto">{{ object.body }}</p>
+                        <a href="{% url 'blog:detail' object.pk %}" style="color:blue">смотреть дальше...</a>
+                        <div class="mb-1 text-muted">просмотры: {{ object.view }}</div>
+                    </div>
+                    <div class="col-auto d-none d-lg-block">
+                        <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg"
+                             role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
+                             focusable="false"><title>Placeholder</title>
+                            <img src="{{ object.image.url }}">
+                        </svg>
+
+                    </div>
                 </div>
             </div>
-
-             <div class="col-sm-3">
-                <div class="service-item icon-effect-1 icon-violet icon-effect-1a">
-                    <a href="{% url 'servises:message_list' %}">
-                        <i class="hi-icon icon icon-Umbrella"></i>
-                    </a>
-                    <h5 class="text-center">Рассылка</h5>
-                    <div class="main-border violet"></div>
-                    <p class="text-center">Сообщения для рассылок</p>
-                </div>
-            </div> <!-- end service item -->
-
-            <div class="col-sm-3">
-                <div class="service-item icon-effect-1 icon-orange icon-effect-1a last">
-                    <a href="{% url 'servises:log' %}">
-                        <i class="hi-icon icon icon-DesktopMonitor"></i>
-                    </a>
-                    <h5 class="text-center">Логи</h5>
-                    <div class="main-border orange"></div>
-                    <p class="text-center">Статистика по рассылкам</p>
-                </div>
-            </div>
-        </div> <!-- end row -->
-    </div> <!-- end container -->
-</section>
+        </div>
+        {% endfor %}
 
 {% endblock %}

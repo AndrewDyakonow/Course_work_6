@@ -26,13 +26,8 @@ def help_mixin(data: Settings, command, status) -> None:
 
 class AutoMail:
 
-    __object = None
     scheduler = BackgroundScheduler()
-
-    def __new__(cls, *args, **kwargs):
-        if cls.__object is None:
-            cls.__object = super().__new__(cls)
-        return cls.__object
+    __objects = []
 
     def __init__(self, data):
         self.data: Settings = data
@@ -40,14 +35,22 @@ class AutoMail:
 
     def create_automail(self):
         """Создание задания"""
+        if len(AutoMail.scheduler.get_jobs()) > 0:
+            AutoMail.scheduler.pause()
+
         AutoMail.scheduler.add_job(
             self.__preparation_sending,
             trigger='cron',
             **(CHOICES.get(self.data.periodicity)),
             start_date=self.data.date_mailing,
             id=self.data.mailing_name,
+            max_instances=10,
         )
-        AutoMail.scheduler.start()
+        if len(AutoMail.scheduler.get_jobs()) == 1:
+            AutoMail.scheduler.start()
+        else:
+            AutoMail.scheduler.resume()
+
         self.setting.status = 'Активирована'
         self.setting.save()
         help_mixin(self.data, 'Создана задача', 'Рассылка активирована')
@@ -81,3 +84,10 @@ class AutoMail:
 
         AutoMail.scheduler.remove_job(job_id=id_job)
         help_mixin(self.data, 'Рассылка завершена', 'Good')
+
+        if len(AutoMail.scheduler.get_jobs()) == 0:
+            AutoMail.scheduler.shutdown()
+
+    @classmethod
+    def get_mailing_count(cls):
+        return len(cls.scheduler.get_jobs())
