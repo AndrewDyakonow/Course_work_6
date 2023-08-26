@@ -1,0 +1,45 @@
+{% extends 'servises/base.html' %}
+
+
+{% block content %}
+
+{% include 'servises/includes/inc_nav_bar.html' %}
+    <body class="bg-light">
+    <main class="container">
+         <div class="my-3 p-3 bg-body rounded shadow-sm">
+            <a class="btn btn-primary" href="{% url 'servises:client_create' %}">Добавить клиента</a>
+        </div>
+        <div class="my-3 p-3 bg-body rounded shadow-sm">
+            <h6 class="border-bottom pb-2 mb-0">Список клиентов</h6>
+            {% for object in object_list %}
+                {% if object.is_active %}
+                <div class="d-flex text-muted pt-3">
+                    <div class="row mb-6">
+                        <div class="col-6">
+                            <p class="pb-3 mb-0 small lh-sm border-bottom">
+                                <strong class="d-block text-black">{{ object.name }}</strong>
+                                <a class="text"> {{ object.email }}</a>
+                                <br>
+                                <a class="text"> {{ object.comment }}</a>
+                            </p>
+                        </div>
+
+                        <div class="row mb-6">
+                            <div class="col-12">
+                                <a class="btn btn-blue" href="{% url 'servises:client' object.pk %}">Подробно</a>
+                                {% if object.creator == user or user.is_superuser or user.is_staff%}
+                                    <a class="btn btn-danger" href="{% url 'servises:client_delete' object.pk %}">Удалить</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <small class="d-block text-end mt-3">
+                    <a href="#">Менеджер {{ object.creator }}</a>
+                </small>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </main>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "servises/base.html" %}
+{% block title %}Log-in{% endblock %}
+{% block content %}
+    {% include 'servises/includes/inc_nav_bar.html' %}
+    <h1>Вход</h1>
+    {% if form.errors %}
+        <p>
+            Ваше имя пользователя и пароль не совпадают.
+            Пожалуйста, попробуйте еще раз.
+        </p>
+    {% else %}
+        <p>Пожалуйста, используйте следующую форму для входа:</p>
+    {% endif %}
+    <div class="login-form">
+        <form action="{% url 'users:login' %}" method="post">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}"/>
+            <p><input type="submit" value="Войти">
+            <a href="{% url 'users:register' %}">Зарегистрироваться</a></p>
+            <a href="{% url 'users:recovery' %}">Забыли пароль?</a>
+
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,340 @@
+[
+  {
+    "model": "servises.client",
+    "pk": 7,
+    "fields": {
+      "name": "Андрей Дьяконов",
+      "email": "dronramone@mail.ru",
+      "comment": "Это я",
+      "creator": "dronramone@mail.ru",
+      "is_active": true
+    }
+  },
+  {
+    "model": "servises.client",
+    "pk": 8,
+    "fields": {
+      "name": "Наташа",
+      "email": "t-ash@mail.ru",
+      "comment": "А это Наташа",
+      "creator": "dronramone@mail.ru",
+      "is_active": true
+    }
+  },
+  {
+    "model": "servises.client",
+    "pk": 9,
+    "fields": {
+      "name": "Andrew",
+      "email": "Blendi.s@yandex.ru",
+      "comment": "Это тоже я",
+      "creator": "dronramone@mail.ru",
+      "is_active": true
+    }
+  },
+  {
+    "model": "servises.settings",
+    "pk": 4,
+    "fields": {
+      "mailing_name": "Четвёртая рассылка",
+      "message": 3,
+      "date_mailing": "2023-07-17T16:29:07Z",
+      "date_end_mailing": "2024-07-17T16:29:07Z",
+      "is_active": true,
+      "creator": "dronramone@mail.ru",
+      "periodicity": "Раз в минуту",
+      "status": "Создана",
+      "client_name": [
+        9
+      ]
+    }
+  },
+  {
+    "model": "servises.settings",
+    "pk": 5,
+    "fields": {
+      "mailing_name": "Пятая рассылка",
+      "message": 3,
+      "date_mailing": "2023-07-17T16:43:41Z",
+      "date_end_mailing": "2023-07-17T16:43:41Z",
+      "is_active": true,
+      "creator": "dronramone@mail.ru",
+      "periodicity": "Раз в день",
+      "status": "Создана",
+      "client_name": [
+        9
+      ]
+    }
+  },
+  {
+    "model": "servises.settings",
+    "pk": 6,
+    "fields": {
+      "mailing_name": "Шестая запись",
+      "message": 3,
+      "date_mailing": "2023-07-17T16:48:21Z",
+      "date_end_mailing": "2023-07-17T16:48:21Z",
+      "is_active": true,
+      "creator": "dronramone@mail.ru",
+      "periodicity": "Раз в день",
+      "status": "Создана",
+      "client_name": [
+        9
+      ]
+    }
+  },
+  {
+    "model": "servises.settings",
+    "pk": 7,
+    "fields": {
+      "mailing_name": "Тестовая",
+      "message": 3,
+      "date_mailing": "2023-07-17T19:30:34Z",
+      "date_end_mailing": "2023-07-17T19:33:34Z",
+      "is_active": true,
+      "creator": "dronramone@mail.ru",
+      "periodicity": "Раз в минуту",
+      "status": "Активна",
+      "client_name": [
+        9
+      ]
+    }
+  },
+  {
+    "model": "servises.settings",
+    "pk": 8,
+    "fields": {
+      "mailing_name": "Рассылка 1",
+      "message": 3,
+      "date_mailing": "2023-07-17T19:53:00Z",
+      "date_end_mailing": "2023-07-17T19:58:00Z",
+      "is_active": false,
+      "creator": "dronramone@mail.ru",
+      "periodicity": "Раз в минуту",
+      "status": "Завершена",
+      "client_name": [
+        9
+      ]
+    }
+  },
+  {
+    "model": "servises.settings",
+    "pk": 9,
+    "fields": {
+      "mailing_name": "Рассылка 2",
+      "message": 4,
+      "date_mailing": "2023-07-17T19:53:00Z",
+      "date_end_mailing": "2023-07-17T19:56:00Z",
+      "is_active": false,
+      "creator": "dronramone@mail.ru",
+      "periodicity": "Раз в минуту",
+      "status": "Завершена",
+      "client_name": [
+        9
+      ]
+    }
+  },
+  {
+    "model": "servises.settings",
+    "pk": 10,
+    "fields": {
+      "mailing_name": "Ещё рассылка",
+      "message": 5,
+      "date_mailing": "2023-07-18T11:57:00Z",
+      "date_end_mailing": "2023-07-18T11:59:00Z",
+      "is_active": false,
+      "creator": "dronramone@mail.ru",
+      "periodicity": "Раз в минуту",
+      "status": "Активна",
+      "client_name": [
+        9,
+        8
+      ]
+    }
+  },
+  {
+    "model": "servises.settings",
+    "pk": 11,
+    "fields": {
+      "mailing_name": "Тестирование логов",
+      "message": 6,
+      "date_mailing": "2023-07-18T12:21:00Z",
+      "date_end_mailing": "2023-07-18T12:23:00Z",
+      "is_active": true,
+      "creator": "dronramone@mail.ru",
+      "periodicity": "Раз в минуту",
+      "status": "Завершена",
+      "client_name": [
+        9,
+        8
+      ]
+    }
+  },
+  {
+    "model": "servises.settings",
+    "pk": 12,
+    "fields": {
+      "mailing_name": "Проверка многозадачности",
+      "message": 6,
+      "date_mailing": "2023-07-18T12:24:00Z",
+      "date_end_mailing": "2023-07-18T12:25:00Z",
+      "is_active": true,
+      "creator": "dronramone@mail.ru",
+      "periodicity": "Раз в минуту",
+      "status": "Активна",
+      "client_name": [
+        9
+      ]
+    }
+  },
+  {
+    "model": "servises.messages",
+    "pk": 3,
+    "fields": {
+      "theme": "Первое письмо",
+      "body": "Это что то типа того из проверки.\r\nПроверочное письмо.",
+      "is_active": true,
+      "creator": "dronramone@mail.ru"
+    }
+  },
+  {
+    "model": "servises.messages",
+    "pk": 4,
+    "fields": {
+      "theme": "Второе письмо",
+      "body": "А это второе письмо для проверки рассылки",
+      "is_active": true,
+      "creator": "dronramone@mail.ru"
+    }
+  },
+  {
+    "model": "servises.messages",
+    "pk": 5,
+    "fields": {
+      "theme": "Третье письмо",
+      "body": "Ведется работа над сервисом.\r\nДанное письмо является проверкой",
+      "is_active": true,
+      "creator": "dronramone@mail.ru"
+    }
+  },
+  {
+    "model": "servises.messages",
+    "pk": 6,
+    "fields": {
+      "theme": "Четвертое письмо",
+      "body": "Тест на предмет логирования рассылок",
+      "is_active": true,
+      "creator": "dronramone@mail.ru"
+    }
+  },
+  {
+    "model": "servises.logs",
+    "pk": 10,
+    "fields": {
+      "title": "Запуск: Тестирование логов",
+      "date_last": "2023-07-18T12:19:39.453Z",
+      "status": "Рассылка включена",
+      "answer": "Без ответа",
+      "settings": 11
+    }
+  },
+  {
+    "model": "servises.logs",
+    "pk": 11,
+    "fields": {
+      "title": "Создана задача: Тестирование логов",
+      "date_last": "2023-07-18T12:19:39.601Z",
+      "status": "Рассылка активирована",
+      "answer": "good",
+      "settings": 11
+    }
+  },
+  {
+    "model": "servises.logs",
+    "pk": 12,
+    "fields": {
+      "title": "Письмо отправлено Blendi.s@yandex.ru: Тестирование логов",
+      "date_last": "2023-07-18T12:21:01.697Z",
+      "status": "Отправлено",
+      "answer": "good",
+      "settings": 11
+    }
+  },
+  {
+    "model": "servises.logs",
+    "pk": 13,
+    "fields": {
+      "title": "Письмо отправлено t-ash@mail.ru: Тестирование логов",
+      "date_last": "2023-07-18T12:21:03.457Z",
+      "status": "Отправлено",
+      "answer": "good",
+      "settings": 11
+    }
+  },
+  {
+    "model": "servises.logs",
+    "pk": 14,
+    "fields": {
+      "title": "Письмо отправлено Blendi.s@yandex.ru: Тестирование логов",
+      "date_last": "2023-07-18T12:22:01.723Z",
+      "status": "Отправлено",
+      "answer": "good",
+      "settings": 11
+    }
+  },
+  {
+    "model": "servises.logs",
+    "pk": 15,
+    "fields": {
+      "title": "Письмо отправлено t-ash@mail.ru: Тестирование логов",
+      "date_last": "2023-07-18T12:22:03.504Z",
+      "status": "Отправлено",
+      "answer": "good",
+      "settings": 11
+    }
+  },
+  {
+    "model": "servises.logs",
+    "pk": 16,
+    "fields": {
+      "title": "Рассылка завершена: Тестирование логов",
+      "date_last": "2023-07-18T12:23:00.017Z",
+      "status": "Good",
+      "answer": "good",
+      "settings": 11
+    }
+  },
+  {
+    "model": "servises.logs",
+    "pk": 17,
+    "fields": {
+      "title": "Запуск: Проверка многозадачности",
+      "date_last": "2023-07-18T12:23:22.837Z",
+      "status": "Рассылка включена",
+      "answer": "Без ответа",
+      "settings": 12
+    }
+  },
+  {
+    "model": "servises.logs",
+    "pk": 18,
+    "fields": {
+      "title": "Создана задача: Проверка многозадачности",
+      "date_last": "2023-07-18T12:23:22.844Z",
+      "status": "Рассылка активирована",
+      "answer": "good",
+      "settings": 12
+    }
+  },
+  {
+    "model": "servises.logs",
+    "pk": 19,
+    "fields": {
+      "title": "Письмо отправлено Blendi.s@yandex.ru: Проверка многозадачности",
+      "date_last": "2023-07-18T12:24:01.828Z",
+      "status": "Отправлено",
+      "answer": "good",
+      "settings": 12
+    }
+  }
+]

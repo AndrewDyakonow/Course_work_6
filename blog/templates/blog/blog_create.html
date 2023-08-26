@@ -1,0 +1,17 @@
+{% extends 'servises/base.html' %}
+
+{% block content %}
+    <div class="row mb-3">
+        <div class="col-6">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                {% if object %}
+                    <input type="submit" class="btn btn-success" value="Редактировать">
+                {% else %}
+                    <input type="submit" class="btn btn-success" value="Опубликовать">
+                {% endif %}
+            </form>
+        </div>
+    </div>
+{% endblock %}

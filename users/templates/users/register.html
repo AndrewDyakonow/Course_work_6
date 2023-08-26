@@ -1,0 +1,25 @@
+{% extends 'servises/base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+    <div class="col-12 blog-main">
+        <form class="row" method="post" enctype="multipart/form-data">
+            <div class="col-8">
+                <div class="card-header">
+                    <h3>Регистрация</h3>
+                </div>
+                {% csrf_token %}
+                {{ form.as_p }}
+                {% if object.is_activated %}
+                    <input type="submit" class="btn btn-success" value="Зарегистрироваться">
+                {% else %}
+                    <input type="submit" class="btn btn-success" value="Выслать код">
+                {% endif %}
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

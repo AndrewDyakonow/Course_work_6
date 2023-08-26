@@ -1,0 +1,19 @@
+{% extends 'servises/base.html' %}
+
+{% block content %}
+
+    {% include 'servises/includes/inc_nav_bar.html' %}
+
+    <div class="container">
+        <div class="col-6">
+            <h1>
+                {{ result }}
+            </h1>
+
+            <a class="btn btn-success" href="{% url 'servises:setting_list' %}">Назад</a>
+        </div>
+
+    </div>
+
+
+{% endblock %}

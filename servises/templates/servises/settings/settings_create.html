@@ -1,0 +1,30 @@
+{% extends 'servises/base.html' %}
+
+
+{% block content %}
+
+    {% include 'servises/includes/inc_nav_bar.html' %}
+    <main class="container">
+        <div class="my-3 p-3 bg-body rounded shadow-sm">
+
+
+            <div class="d-flex text-muted pt-3">
+                <div class="row mb-6">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+
+                        {% if object %}
+                            <input type="submit" class="btn btn-success" value="Изменить">
+                        {% else %}
+                            <input type="submit" class="btn btn-success" value="Добавить рассылку">
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+    </main>
+
+{% endblock %}
