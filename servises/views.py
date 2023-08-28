@@ -4,13 +4,10 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, CreateView
 
-from blog.models import Blog
 from servises.forms import ClientCreateForm, SettingCreateForm, MessagesCreateForm
 from servises.models import Client, Settings, Messages, Logs
 from servises.utils.utils import AutoMail
 from django.utils.timezone import now
-
-import random
 
 
 def start_page(request):
@@ -22,13 +19,10 @@ def start_page(request):
 
 @login_required
 def main_page(requests):
-    a = Blog.objects.all()
-    queryset = random.choices(a, k=3)
     context = {
         'settings': len(Settings.objects.all()),
         'active_settings': AutoMail.get_mailing_count(),
         'clients': len(Client.objects.all()),
-        'queryset': queryset,
     }
 
     return render(requests, 'servises/main_page.html', context=context)

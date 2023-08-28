@@ -5,7 +5,6 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView
 from django.core.mail import send_mail
-from django.shortcuts import render
 from django.contrib.auth import views as auth_views
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
@@ -65,7 +64,7 @@ class VerificationsView(UpdateView):
         self.tocken = form.cleaned_data.get('secretkey')
         a = Users.objects.get(email=self.request.user)
 
-        if self.tocken == a.mytoken:
+        if int(self.tocken) == int(a.mytoken):
             form.instance.is_activated = True
 
         form.save()
@@ -102,6 +101,3 @@ class ProfileView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
-
-
-# LoginRequiredMixin,

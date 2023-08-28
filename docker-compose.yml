@@ -1,0 +1,50 @@
+version: '3.7'
+
+services:
+  django:
+    build: .
+    container_name: my-site
+    volumes:
+      - /home/blendi/PycharmProjects/Mailing_service/.env.docker:/django_app/.env.docker
+    ports:
+      - '8001:8000'
+    networks:
+      - myNet
+    restart: unless-stopped
+    depends_on:
+      PSQL:
+        condition: service_healthy
+      redis-serv:
+        condition: service_started
+
+  redis-serv:
+    image: redis:7.0.2-alpine
+    container_name: Redis
+    command: redis-server --save 60 1 --loglevel warning
+    networks:
+      - myNet
+    ports:
+      - '6379:6379'
+    restart: unless-stopped
+
+  PSQL:
+    container_name: PSQL
+    image: postgres:latest
+    networks:
+      - myNet
+    ports:
+      - '5430:5432'
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=PSQL
+      - POSTGRES_HOST_AUTH_METHOD=md5
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready']
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+networks:
+  myNet:
+    driver: bridge
